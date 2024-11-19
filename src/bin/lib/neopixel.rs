@@ -2,7 +2,7 @@
 use esp_hal::{
     delay::Delay,
     spi::{master::{self, SpiDmaBus}, SpiMode},
-    peripherals::{self, Peripherals, ADC1, SPI2, TIMG0},
+    peripherals::{self, Peripherals, SPI2, TIMG0},
     timer::timg::Wdt, Blocking
 };
 use core::result::Result::Ok;
