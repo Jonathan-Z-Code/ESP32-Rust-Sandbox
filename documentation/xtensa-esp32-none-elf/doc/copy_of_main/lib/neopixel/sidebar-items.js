@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"constant":["ARR_SIZE","NEOPIXEL_LOGIC_0","NEOPIXEL_LOGIC_1","NUM_LEDS","PACKET_SIZE","TURN_OFF"],"fn":["neopixel_init_buffer","neopixel_set_data","neopixel_set_entire_data","spi_dma_send","spi_dma_send_breathing"]};
