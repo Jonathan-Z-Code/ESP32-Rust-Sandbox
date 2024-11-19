@@ -1,5 +1,8 @@
 # esp32_test_rust
 
+## Documentation
+[GitHub Pages Docs](https://jonathan-z-code.github.io/testing-rust-esp32/xtensa-esp32-none-elf/doc/copy_of_main/index.html)
+
 ## Dev Containers
 This repository offers Dev Containers supports for:
 -  [VS Code Dev Containers](https://code.visualstudio.com/docs/remote/containers#_quick-start-open-an-existing-folder-in-a-container)
