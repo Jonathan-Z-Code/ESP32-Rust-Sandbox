@@ -12,7 +12,11 @@ target/
 # User included ignores
 documentation/
 
-# docs is going to be the most up-to-date documentation
+# docs folder is going to be the most up-to-date documentation
 docs/release/
 docs/xtensa-esp32-none-elf/release/
 docs/CACHEDIR.TAG
+
+# github workflows and devcontainer I dont use
+.devcontainer/
+.github/workflows
