@@ -1,3 +1,26 @@
+//! # Welcome to the neopixel library source code!
+//! - By: Jonathan Zurita
+//! - Date: 11/18/2024
+//! - Version: 0.1.0
+//! 
+//! ## What is the function of this library?
+//! This library allows the user to call user-friendly functions
+//! in order to manipulate WS2812 neopixels. 
+//! 
+//! ## IMPORTANT NOTES
+//! Please edit the `pub const` variables as needed
+//! - (e.g. change `NUM_LEDS` to 24 instead of default value of 8.)
+//! 
+//! ## Why do use a watchdog timer as an argument?
+//! I decided to include a watchdog timer in order
+//! to protect against possible lockups in DMA transmission.
+//! Thankfully utilizing a WDT requires minimal overhead. :)
+//! 
+//! ## Release Notes
+//! V0.1.0 - Released neopixel library to the public 
+
+
+
 // user defined includes
 use esp_hal::{
     delay::Delay,
@@ -10,15 +33,27 @@ use core::result::Result::Err;
 
 // IMPORTANT NOTE: Please edit these variables in order to best fit your
 // neopixel array! :)
+
+/// Desired number of neopixels to control
 pub const NUM_LEDS: usize = 8;
+/// Number of color bits per neopixel
 pub const PACKET_SIZE: usize = 24;
+/// ARR_SIZE = NUM_LEDS * PACKET_SIZE
 pub const ARR_SIZE: usize = NUM_LEDS * PACKET_SIZE;
+/// SPI generate waveforms (LOGIC_1)
 pub const NEOPIXEL_LOGIC_0: u8 = 0x80;
+/// SPI generate waveforms (LOGIC_0)
 pub const NEOPIXEL_LOGIC_1: u8 = 0xF8;
-const TURN_OFF: u32 = 0x00;
+/// Essentially hex color code for black (no light)
+const TURN_OFF: u32 = 0x000000;
 
 ////////////////////////////// START OF NEOPIXEL FUNCTIONS /////////////////////////////////////////////
 
+
+/// # <<< Click on me to see function desc!
+/// # Purpose:
+/// Sets a specific neopixel to a desired color code
+/// - Has error checking such as wrong color code size and wrong position argument given
 pub fn neopixel_set_data(rgb_color: u32, position: usize, arr: &mut [u8 ; ARR_SIZE]) -> Result<u8, &str>{
 
     // error checking for RGB value
@@ -56,6 +91,10 @@ pub fn neopixel_set_data(rgb_color: u32, position: usize, arr: &mut [u8 ; ARR_SI
 
 }
 
+/// # <<< Click on me to see function desc!
+/// # Purpose:
+/// Sets the entire user-defined neopixel array a particular color code
+/// - Has error checking such as wrong color code size and wrong position argument given
 pub fn neopixel_set_entire_data(rgb_color: u32, arr: &mut [u8 ; ARR_SIZE]) {
 
     for i in 0..NUM_LEDS {
@@ -64,6 +103,10 @@ pub fn neopixel_set_entire_data(rgb_color: u32, arr: &mut [u8 ; ARR_SIZE]) {
 
 }
 
+/// # <<< Click on me to see function desc!
+/// # Purpose:
+/// Returns a mutable array that stores the data for the desired
+/// number of neopixels (determine by `NUM_LEDS`)
 pub fn neopixel_init_buffer() -> [u8; ARR_SIZE] {
     
     // init to all zeroes

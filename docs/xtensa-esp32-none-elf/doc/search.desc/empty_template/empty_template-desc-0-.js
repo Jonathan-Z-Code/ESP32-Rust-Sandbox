@@ -1,1 +1,1 @@
-searchState.loadedDescShard("empty_template", 0, "")
+searchState.loadedDescShard("empty_template", 0, "Welcome to the neopixel library source code!\nARR_SIZE = NUM_LEDS * PACKET_SIZE\nSPI generate waveforms (LOGIC_1)\nSPI generate waveforms (LOGIC_0)\nDesired number of neopixels to control\nNumber of color bits per neopixel\nEssentially hex color code for black (no light)\n&lt;&lt;&lt; Click on me to see function desc!\n&lt;&lt;&lt; Click on me to see function desc!\n&lt;&lt;&lt; Click on me to see function desc!")

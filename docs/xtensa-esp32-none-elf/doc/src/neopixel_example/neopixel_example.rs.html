@@ -143,12 +143,39 @@
 <a href="#143" id="143">143</a>
 <a href="#144" id="144">144</a>
 <a href="#145" id="145">145</a>
+<a href="#146" id="146">146</a>
+<a href="#147" id="147">147</a>
+<a href="#148" id="148">148</a>
+<a href="#149" id="149">149</a>
+<a href="#150" id="150">150</a>
+<a href="#151" id="151">151</a>
+<a href="#152" id="152">152</a>
+<a href="#153" id="153">153</a>
+<a href="#154" id="154">154</a>
+<a href="#155" id="155">155</a>
+<a href="#156" id="156">156</a>
+<a href="#157" id="157">157</a>
+<a href="#158" id="158">158</a>
+<a href="#159" id="159">159</a>
 </pre></div><pre class="rust"><code><span class="attr">#![no_std]
 #![no_main]
 
-
 #![allow(special_module_name)]
 
+</span><span class="doccomment">//! # Welcome to the neopixel example code!
+//! - By: Jonathan Zurita
+//! - Date: 11/18/2024
+//! 
+//! ## What is the function of this example?
+//! This file shows the capabilities of the 
+//! neopixel library. From individually addressing
+//! one neopixel to addressing all of them, it truly
+//! is a versatile library.
+//! 
+//! - If you are interested in looking into neopixel
+//! library source code, look into the lib module to find 
+//! `neopixel`
+//! 
 
 </span><span class="kw">mod </span>lib;
 <span class="kw">use </span>lib::neopixel;
@@ -172,12 +199,13 @@
 <span class="kw">use </span>esp_println::println;
 
 
-
-<span class="attr">#[entry]
+<span class="doccomment">/// main entry point for this example
+</span><span class="attr">#[entry]
 </span><span class="kw">fn </span>main() -&gt; ! {
 
     <span class="comment">//////////////////////// INIT PERIPHERAL AND IO MAPS //////////////////////////////////////////////////////
     
+
     </span><span class="kw">let </span>peripherals = esp_hal::init(esp_hal::Config::default());
     <span class="kw">let </span>io = Io::new(peripherals.GPIO, peripherals.IO_MUX);
     <span class="kw">let </span>str = esp_hal::reset::get_reset_reason();

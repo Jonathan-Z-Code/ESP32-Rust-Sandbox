@@ -126,11 +126,77 @@
 <a href="#126" id="126">126</a>
 <a href="#127" id="127">127</a>
 <a href="#128" id="128">128</a>
-</pre></div><pre class="rust"><code><span class="comment">// user defined includes
+<a href="#129" id="129">129</a>
+<a href="#130" id="130">130</a>
+<a href="#131" id="131">131</a>
+<a href="#132" id="132">132</a>
+<a href="#133" id="133">133</a>
+<a href="#134" id="134">134</a>
+<a href="#135" id="135">135</a>
+<a href="#136" id="136">136</a>
+<a href="#137" id="137">137</a>
+<a href="#138" id="138">138</a>
+<a href="#139" id="139">139</a>
+<a href="#140" id="140">140</a>
+<a href="#141" id="141">141</a>
+<a href="#142" id="142">142</a>
+<a href="#143" id="143">143</a>
+<a href="#144" id="144">144</a>
+<a href="#145" id="145">145</a>
+<a href="#146" id="146">146</a>
+<a href="#147" id="147">147</a>
+<a href="#148" id="148">148</a>
+<a href="#149" id="149">149</a>
+<a href="#150" id="150">150</a>
+<a href="#151" id="151">151</a>
+<a href="#152" id="152">152</a>
+<a href="#153" id="153">153</a>
+<a href="#154" id="154">154</a>
+<a href="#155" id="155">155</a>
+<a href="#156" id="156">156</a>
+<a href="#157" id="157">157</a>
+<a href="#158" id="158">158</a>
+<a href="#159" id="159">159</a>
+<a href="#160" id="160">160</a>
+<a href="#161" id="161">161</a>
+<a href="#162" id="162">162</a>
+<a href="#163" id="163">163</a>
+<a href="#164" id="164">164</a>
+<a href="#165" id="165">165</a>
+<a href="#166" id="166">166</a>
+<a href="#167" id="167">167</a>
+<a href="#168" id="168">168</a>
+<a href="#169" id="169">169</a>
+<a href="#170" id="170">170</a>
+<a href="#171" id="171">171</a>
+</pre></div><pre class="rust"><code><span class="doccomment">//! # Welcome to the neopixel library source code!
+//! - By: Jonathan Zurita
+//! - Date: 11/18/2024
+//! - Version: 0.1.0
+//! 
+//! ## What is the function of this library?
+//! This library allows the user to call user-friendly functions
+//! in order to manipulate WS2812 neopixels. 
+//! 
+//! ## IMPORTANT NOTES
+//! Please edit the `pub const` variables as needed
+//! - (e.g. change `NUM_LEDS` to 24 instead of default value of 8.)
+//! 
+//! ## Why do use a watchdog timer as an argument?
+//! I decided to include a watchdog timer in order
+//! to protect against possible lockups in DMA transmission.
+//! Thankfully utilizing a WDT requires minimal overhead. :)
+//! 
+//! ## Release Notes
+//! V0.1.0 - Released neopixel library to the public 
+
+
+
+</span><span class="comment">// user defined includes
 </span><span class="kw">use </span>esp_hal::{
     delay::Delay,
     spi::{master::{<span class="self">self</span>, SpiDmaBus}, SpiMode},
-    peripherals::{<span class="self">self</span>, Peripherals, ADC1, SPI2, TIMG0},
+    peripherals::{<span class="self">self</span>, Peripherals, SPI2, TIMG0},
     timer::timg::Wdt, Blocking
 };
 <span class="kw">use </span>core::result::Result::Ok;
@@ -138,15 +204,27 @@
 
 <span class="comment">// IMPORTANT NOTE: Please edit these variables in order to best fit your
 // neopixel array! :)
+
+</span><span class="doccomment">/// Desired number of neopixels to control
 </span><span class="kw">pub const </span>NUM_LEDS: usize = <span class="number">8</span>;
-<span class="kw">pub const </span>PACKET_SIZE: usize = <span class="number">24</span>;
-<span class="kw">pub const </span>ARR_SIZE: usize = NUM_LEDS * PACKET_SIZE;
-<span class="kw">pub const </span>NEOPIXEL_LOGIC_0: u8 = <span class="number">0x80</span>;
-<span class="kw">pub const </span>NEOPIXEL_LOGIC_1: u8 = <span class="number">0xF8</span>;
-<span class="kw">const </span>TURN_OFF: u32 = <span class="number">0x00</span>;
+<span class="doccomment">/// Number of color bits per neopixel
+</span><span class="kw">pub const </span>PACKET_SIZE: usize = <span class="number">24</span>;
+<span class="doccomment">/// ARR_SIZE = NUM_LEDS * PACKET_SIZE
+</span><span class="kw">pub const </span>ARR_SIZE: usize = NUM_LEDS * PACKET_SIZE;
+<span class="doccomment">/// SPI generate waveforms (LOGIC_1)
+</span><span class="kw">pub const </span>NEOPIXEL_LOGIC_0: u8 = <span class="number">0x80</span>;
+<span class="doccomment">/// SPI generate waveforms (LOGIC_0)
+</span><span class="kw">pub const </span>NEOPIXEL_LOGIC_1: u8 = <span class="number">0xF8</span>;
+<span class="doccomment">/// Essentially hex color code for black (no light)
+</span><span class="kw">const </span>TURN_OFF: u32 = <span class="number">0x000000</span>;
 
 <span class="comment">////////////////////////////// START OF NEOPIXEL FUNCTIONS /////////////////////////////////////////////
 
+
+</span><span class="doccomment">/// # &lt;&lt;&lt; Click on me to see function desc!
+/// # Purpose:
+/// Sets a specific neopixel to a desired color code
+/// - Has error checking such as wrong color code size and wrong position argument given
 </span><span class="kw">pub fn </span>neopixel_set_data(rgb_color: u32, position: usize, arr: <span class="kw-2">&amp;mut </span>[u8 ; ARR_SIZE]) -&gt; <span class="prelude-ty">Result</span>&lt;u8, <span class="kw-2">&amp;</span>str&gt;{
 
     <span class="comment">// error checking for RGB value
@@ -184,7 +262,11 @@
 
 }
 
-<span class="kw">pub fn </span>neopixel_set_entire_data(rgb_color: u32, arr: <span class="kw-2">&amp;mut </span>[u8 ; ARR_SIZE]) {
+<span class="doccomment">/// # &lt;&lt;&lt; Click on me to see function desc!
+/// # Purpose:
+/// Sets the entire user-defined neopixel array a particular color code
+/// - Has error checking such as wrong color code size and wrong position argument given
+</span><span class="kw">pub fn </span>neopixel_set_entire_data(rgb_color: u32, arr: <span class="kw-2">&amp;mut </span>[u8 ; ARR_SIZE]) {
 
     <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..NUM_LEDS {
         neopixel_set_data(rgb_color, i, arr).unwrap();
@@ -192,7 +274,11 @@
 
 }
 
-<span class="kw">pub fn </span>neopixel_init_buffer() -&gt; [u8; ARR_SIZE] {
+<span class="doccomment">/// # &lt;&lt;&lt; Click on me to see function desc!
+/// # Purpose:
+/// Returns a mutable array that stores the data for the desired
+/// number of neopixels (determine by `NUM_LEDS`)
+</span><span class="kw">pub fn </span>neopixel_init_buffer() -&gt; [u8; ARR_SIZE] {
     
     <span class="comment">// init to all zeroes
     </span><span class="kw">let </span><span class="kw-2">mut </span>arr: [u8 ; ARR_SIZE] = [<span class="number">0 </span>; ARR_SIZE];

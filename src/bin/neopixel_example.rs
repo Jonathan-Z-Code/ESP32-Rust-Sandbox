@@ -1,9 +1,22 @@
 #![no_std]
 #![no_main]
 
-
 #![allow(special_module_name)]
 
+//! # Welcome to the neopixel example code!
+//! - By: Jonathan Zurita
+//! - Date: 11/18/2024
+//! 
+//! ## What is the function of this example?
+//! This file shows the capabilities of the 
+//! neopixel library. From individually addressing
+//! one neopixel to addressing all of them, it truly
+//! is a versatile library.
+//! 
+//! - If you are interested in looking into neopixel
+//! library source code, look into the lib module to find 
+//! `neopixel`
+//! 
 
 mod lib;
 use lib::neopixel;
@@ -27,12 +40,13 @@ use esp_hal::{
 use esp_println::println;
 
 
-
+/// main entry point for this example
 #[entry]
 fn main() -> ! {
 
     //////////////////////// INIT PERIPHERAL AND IO MAPS //////////////////////////////////////////////////////
     
+
     let peripherals = esp_hal::init(esp_hal::Config::default());
     let io = Io::new(peripherals.GPIO, peripherals.IO_MUX);
     let str = esp_hal::reset::get_reset_reason();
