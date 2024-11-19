@@ -1,4 +1,4 @@
-# esp32_test_rust
+# ESP32 Rust Sandbox
 
 ## Main Documentation Page
 This Github Pages integration provides documentation for all source files within `src/bin`. Look at the "Crates" section in the 
