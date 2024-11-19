@@ -1,7 +1,6 @@
 // user defined includes
 use esp_hal::{
     delay::Delay,
-    dma::{Dma, DmaPriority, DmaRxBuf, DmaTxBuf},
     spi::{master::{self, SpiDmaBus}, SpiMode},
     peripherals::{self, Peripherals, ADC1, SPI2, TIMG0},
     timer::timg::Wdt, Blocking
@@ -123,8 +122,7 @@ pub fn spi_dma_send(spi: &mut SpiDmaBus<SPI2, esp_hal::spi::FullDuplexMode, Bloc
 {
     // feed watchdog when spi transfer is complete!
     match spi.write(arr) {
-        Ok(t) => wdt.feed(),
-        Err(e) => () ,
-    }
-    
+        Ok(_t) => wdt.feed(),
+        Err(_e) => () ,
+    }    
 }

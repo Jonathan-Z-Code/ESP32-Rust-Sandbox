@@ -126,12 +126,9 @@
 <a href="#126" id="126">126</a>
 <a href="#127" id="127">127</a>
 <a href="#128" id="128">128</a>
-<a href="#129" id="129">129</a>
-<a href="#130" id="130">130</a>
 </pre></div><pre class="rust"><code><span class="comment">// user defined includes
 </span><span class="kw">use </span>esp_hal::{
     delay::Delay,
-    dma::{Dma, DmaPriority, DmaRxBuf, DmaTxBuf},
     spi::{master::{<span class="self">self</span>, SpiDmaBus}, SpiMode},
     peripherals::{<span class="self">self</span>, Peripherals, ADC1, SPI2, TIMG0},
     timer::timg::Wdt, Blocking
@@ -253,8 +250,7 @@
 {
     <span class="comment">// feed watchdog when spi transfer is complete!
     </span><span class="kw">match </span>spi.write(arr) {
-        <span class="prelude-val">Ok</span>(t) =&gt; wdt.feed(),
-        <span class="prelude-val">Err</span>(e) =&gt; () ,
-    }
-    
+        <span class="prelude-val">Ok</span>(_t) =&gt; wdt.feed(),
+        <span class="prelude-val">Err</span>(_e) =&gt; () ,
+    }    
 }</code></pre></div></section></main></body></html>

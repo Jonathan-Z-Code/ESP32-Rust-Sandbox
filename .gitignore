@@ -20,3 +20,4 @@ docs/CACHEDIR.TAG
 # github workflows and devcontainer I dont use
 .devcontainer/
 .github/workflows
+wokwi.toml

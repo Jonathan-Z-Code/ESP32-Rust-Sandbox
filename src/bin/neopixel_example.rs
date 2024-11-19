@@ -1,26 +1,27 @@
 #![no_std]
 #![no_main]
 
+
+#![allow(special_module_name)]
+
+
 mod lib;
 use lib::neopixel;
 
-const ADC1_0_GPIO: u8 = 36;
 
 use esp_backtrace as _;
 
 use esp_hal::{
-    analog::adc::{self, Adc, AdcConfig, Attenuation}, 
-    gpio::{GpioPin, Io, Level, Output}, 
-    peripheral::{self, Peripheral}, 
-    peripherals::{ADC1, SPI2, TIMG0}, 
+    analog::adc::{Adc, AdcConfig, Attenuation}, 
+    gpio::{Io, Level, Output}, 
     prelude::*, 
-    timer::timg::{self, Wdt,TimerGroup}, Blocking, Async
+    timer::timg::TimerGroup,
 };
 
 use esp_hal::{
     delay::Delay,
     dma::{Dma, DmaPriority, DmaRxBuf, DmaTxBuf},
-    spi::{master, SpiMode}
+    spi::master,
 };
 
 use esp_println::println;
@@ -93,7 +94,7 @@ fn main() -> ! {
     neopixel::spi_dma_send_breathing(&mut spi_dma, &mut arr, &mut delay, &mut wdt);
 
     // init BLUE LED GPIO pin
-    let mut led = Output::new(io.pins.gpio2, Level::Low);
+    let mut _led = Output::new(io.pins.gpio2, Level::Low);
 
 
     //////////////////////// INIT ADC AND PASS INTO FUNCTION!! //////////////////////////////////////////////////////
