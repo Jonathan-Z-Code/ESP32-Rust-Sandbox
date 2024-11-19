@@ -10,6 +10,9 @@ target/
 *.pdb
 
 # User included ignores
-documentation/release/
-documentation/xtensa-esp32-none-elf/release/
-documentation/CACHEDIR.TAG
+documentation/
+
+# docs is going to be the most up-to-date documentation
+docs/release/
+docs/xtensa-esp32-none-elf/release/
+docs/CACHEDIR.TAG
