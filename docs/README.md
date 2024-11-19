@@ -1,6 +1,6 @@
 # ESP32 Rust Sandbox
-## Welcome to the ESP32 Rust Sandbox
-## By: Jonathan Zurita
+# Welcome to the ESP32 Rust Sandbox
+# By: Jonathan Zurita
 
 Here are some coding examples I have created through the esp hal no_std library provided
 by Espressif!
